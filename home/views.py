@@ -21,14 +21,15 @@ def about (request):
 def thanks(request):
     return render(request, 'thanks.html')
 
-def contact (request):
+def contact(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         message = request.POST.get('message')
-        invalid_imput = ['', ' ']
-        if name in invalid_imput or email in invalid_imput or phone in invalid_imput or message in invalid_imput:
+        
+        invalid_input = ['', ' ']
+        if name in invalid_input or email in invalid_input or phone in invalid_input or message in invalid_input:
             messages.error(request, 'One or more fields are empty!')
         else:
             email_pattern = re.compile(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
@@ -36,22 +37,29 @@ def contact (request):
 
             if email_pattern.match(email) and phone_pattern.match(phone):
                 form_data = {
-                'name':name,
-                'email':email,
-                'phone':phone,
-                'message':message,
+                    'name': name,
+                    'email': email,
+                    'phone': phone,
+                    'message': message,
                 }
-                message = '''
-                From:\n\t\t{}\n
-                Message:\n\t\t{}\n
-                Email:\n\t\t{}\n
-                Phone:\n\t\t{}\n
-                '''.format(form_data['name'], form_data['message'], form_data['email'],form_data['phone'])
-                send_mail('You got a mail!', message, '', ['dev.ash.py@gmail.com'])
+                message_content = '''
+                From: {}\n
+                Message: {}\n
+                Email: {}\n
+                Phone: {}\n
+                '''.format(form_data['name'], form_data['message'], form_data['email'], form_data['phone'])
+                
+                send_mail(
+                    'You got a mail!',
+                    message_content,
+                    'pawan.kumarsahu.civ20@itbhu.ac.in',  # Replace with your email
+                    ['pawan.kumarsahu.civ20@itbhu.ac.in']
+                )
                 messages.success(request, 'Your message was sent.')
-                # return HttpResponseRedirect('/thanks')
+                return redirect('/thanks')  # Redirect to a thank you page after successful submission
             else:
-                messages.error(request, 'Email or Phone is Invalid!')
+                messages.error(request, 'Email or Phone is invalid!')
+                
     return render(request, 'contact.html', {})
 
 def projects (request):
