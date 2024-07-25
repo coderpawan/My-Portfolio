@@ -1,38 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% block title %}{{query}}
-{%endblock %} {% block content %} {% comment %} {% for blog in blogs %}
-{{blog.title}}
-<img src="{{blog.thumbnail_img.url}}" />
-{% endfor %} {% endcomment %} {% comment %}
-<div class="container mx-auto p-5 bg-gray-800 text-white">
-  <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-900 p-5">
-    <div class="flex justify-center">
-      <img
-        class="rounded-lg max-w-80 md:max-w-sm h-auto"
-        src="{% static 'images/password-generator.png' %}"
-        alt="image"
-      />
-    </div>
-    <div class="flex justify-center">
-      <p>Text</p>
-    </div>
-  </div>
-</div>
-{% endcomment %} {% comment %}
-<div class="md:p-20 lg:p-40 bg-gray-800">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-5">
-    <div
-      class="bg-green-100 text-green-500 text-lg font-bold text-center p-14 rounded-lg"
-    >
-      1
-    </div>
-    <div
-      class="bg-green-100 text-green-500 text-lg font-bold text-center p-14 rounded-lg"
-    >
-      2
-    </div>
-  </div>
-</div>
-{% endcomment %}
+{%endblock %} {% block content %}
 
 <div class="bg-gray-800 text-white p-5 md:py-8 md:px-20 lg:px-40 xl:px-60">
   <p
@@ -43,13 +10,6 @@
   </p>
   {% if message %}
   <div class="p-5 grid place-items-center mt-10 mb-40 text-center">
-    {% comment %}
-    <img
-      class="h-auto w-96"
-      src="{% static 'images/404-error.svg' %}"
-      alt="image"
-    />
-    {% endcomment %}
     <p
       style="font-family: Poppins-Bold"
       class="my-4 text-5xl font-extrabold md:text-8xl"
@@ -143,13 +103,7 @@
           ></a
         >
       </p>
-      {% comment %}
-      <a
-        class="text-sm bg-gray-700 py-1 px-3 rounded-full"
-        href="/category/{{blog.category}}"
-        ><i class="bi bi-tag"></i> {{blog.category}}</a
-      ><br /><br />
-      {% endcomment %}
+
       <a href="/blogpost/{{blog.slug}}"
         ><button
           class="bg-blue-600 p-2 px-4 rounded-[6px] hover:bg-gray-800 hover:outline hover:outline-blue-600 transition delay-75 ease-in-out my-3"
@@ -158,33 +112,7 @@
       ></a>
     </div>
   </div>
-  {% endfor %} {% comment %} {% if results.has_other_pages %}
-  <div class="pagination flex py-4 gap-x-20 md:gap-x-60">
-    {% if results.has_previous %}
-    <div class="">
-      <a
-        class="bg-blue-600 p-2 px-4 rounded-[6px] hover:bg-gray-800 hover:outline hover:outline-blue-600 transition delay-75 ease-in-out my-3"
-        href="?q={{ query }}&page={{ results.previous_page_number }}"
-        ><i class="bi bi-arrow-left font-extrabold"></i> Previous</a
-      >
-    </div>
-    {% endif %} {% endcomment %} {% comment %} {% for page in
-    results.paginator.page_range %} {% if page == results.number %}
-    <span class="current-page">{{ page }}</span>
-    {% else %}
-    <a href="?q={{ query }}&page={{ page }}">{{ page }}</a>
-    {% endif %} {% endfor %} {% endcomment %} {% comment %} {% if
-    results.has_next %}
-    <div class="">
-      <a
-        class="bg-blue-600 p-2 px-4 rounded-[6px] hover:bg-gray-800 hover:outline hover:outline-blue-600 transition delay-75 ease-in-out my-3"
-        href="?q={{ query }}&page={{ results.next_page_number }}"
-        >Next <i class="bi bi-arrow-right font-extrabold"></i
-      ></a>
-    </div>
-    {% endif %}
-  </div>
-  {% endif %} {% endcomment %}
+  {% endfor %}
   <div class="pagination py-8">
     <span class="page-links">
       {% if results.has_previous %}
@@ -195,11 +123,7 @@
           ><i class="bi bi-arrow-left font-extrabold"></i> Previous</a
         >
       </div>
-      {% endif %} {% comment %}
-      <span class="page-current">
-        Page {{ blogs.number }} of {{ blogs.paginator.num_pages }}
-      </span>
-      {% endcomment %} {% if results.has_next %}
+      {% endif %}{% if results.has_next %}
       <div class="float-right">
         <a
           class="bg-blue-600 p-2 px-4 rounded-[6px] hover:bg-gray-800 hover:outline hover:outline-blue-600 transition delay-75 ease-in-out my-3"
